@@ -1,7 +1,7 @@
 """
 Budgets Router
 """
-from fastapi import APIRouter
+from fastapi import APIRouter, HTTPException
 import pymongo
 
 router = APIRouter()
@@ -29,7 +29,11 @@ def get_budgets():
     """
     collection = get_collection("proverbial-path", "budgets")
     budgets = collection.find({})
-    return list(budgets)
+    budgets_list = list(budgets)
+
+    if len(budgets_list) == 0:
+        raise HTTPException(status_code=404, detail="Budgets not found")
+    return budgets_list
 
 
 # Path: /budgets/{budget_id}
@@ -42,6 +46,8 @@ def get_budget(budget_id: str):
     """
     collection = get_collection("proverbial-path", "budgets")
     budget = collection.find_one({"_id": budget_id})
+    if budget is None:
+        raise HTTPException(status_code=404, detail="Budget not found")
     return budget
 
 
