@@ -2,9 +2,22 @@
 Budgets Router
 """
 from fastapi import APIRouter
-from pymongo import MongoClient
+import pymongo
 
 router = APIRouter()
+
+
+def get_collection(db_name: str, collection_name: str) -> pymongo.collection.Collection:
+    """
+    Get a collection from the database
+    :param db_name: The name of the database
+    :param collection_name: The name of the collection
+    :return: The collection
+    """
+    client = pymongo.MongoClient("mongodb://localhost:27017/")
+    db = client[db_name]
+    collection = db[collection_name]
+    return collection
 
 
 # Path: /budgets
@@ -14,14 +27,12 @@ def get_budgets():
     Get all budgets
     :return:
     """
-    client = MongoClient("mongodb://localhost:27017/")
-    db = client["proverbial-path"]
-    collection = db["budgets"]
+    collection = get_collection("proverbial-path", "budgets")
     budgets = collection.find({})
     return list(budgets)
 
 
-# Path: /budgets/{id}
+# Path: /budgets/{budget_id}
 @router.get("/budgets/{budget_id}")
 def get_budget(budget_id: str):
     """
@@ -29,14 +40,12 @@ def get_budget(budget_id: str):
     :param budget_id: The id of the budget
     :return:
     """
-    client = MongoClient("mongodb://localhost:27017/")
-    db = client["proverbial-path"]
-    collection = db["budgets"]
+    collection = get_collection("proverbial-path", "budgets")
     budget = collection.find_one({"_id": budget_id})
     return budget
 
 
-# Path: /budgets/{id}
+# Path: /budgets/{budget_id}
 @router.put("/budgets/{budget_id}")
 def put_budget(budget_id: str):
     """
@@ -44,8 +53,6 @@ def put_budget(budget_id: str):
     :param budget_id: The id of the budget
     :return:
     """
-    client = MongoClient("mongodb://localhost:27017/")
-    db = client["proverbial-path"]
-    collection = db["budgets"]
+    collection = get_collection("proverbial-path", "budgets")
     result = collection.insert_one({"_id": budget_id})
     return {"message": "Budget created", "id": result.inserted_id}
