@@ -1,17 +1,14 @@
-from fastapi import FastAPI
+"""
+Budgets Router
+"""
+from fastapi import APIRouter
 from pymongo import MongoClient
 
-app = FastAPI()
-
-
-# Path: /
-@app.get("/")
-def root():
-    return {"message": "Hello World"}
+router = APIRouter()
 
 
 # Path: /budgets
-@app.get("/budgets")
+@router.get("/budgets")
 def get_budgets():
     """
     Get all budgets
@@ -25,7 +22,7 @@ def get_budgets():
 
 
 # Path: /budgets/{id}
-@app.get("/budgets/{id}")
+@router.get("/budgets/{budget_id}")
 def get_budget(budget_id: str):
     """
     Get a budget by id
@@ -40,11 +37,11 @@ def get_budget(budget_id: str):
 
 
 # Path: /budgets/{id}
-@app.put("/budgets/{id}")
+@router.put("/budgets/{budget_id}")
 def put_budget(budget_id: str):
     """
     Create a budget
-    :param budget_id:
+    :param budget_id: The id of the budget
     :return:
     """
     client = MongoClient("mongodb://localhost:27017/")
