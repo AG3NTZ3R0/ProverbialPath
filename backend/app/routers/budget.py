@@ -40,7 +40,7 @@ def get_budgets():
 @router.get("/budgets/{budget_id}")
 def get_budget(budget_id: str):
     """
-    Get a budget by id
+    Get a budget
     :param budget_id: The id of the budget
     :return: The budget
     """
