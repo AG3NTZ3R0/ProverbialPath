@@ -13,6 +13,10 @@ def root():
 # Path: /budgets
 @app.get("/budgets")
 def get_budgets():
+    """
+    Get all budgets
+    :return:
+    """
     client = MongoClient("mongodb://localhost:27017/")
     db = client["proverbial-path"]
     collection = db["budgets"]
@@ -23,6 +27,11 @@ def get_budgets():
 # Path: /budgets/{id}
 @app.get("/budgets/{id}")
 def get_budget(budget_id: str):
+    """
+    Get a budget by id
+    :param budget_id: The id of the budget
+    :return:
+    """
     client = MongoClient("mongodb://localhost:27017/")
     db = client["proverbial-path"]
     collection = db["budgets"]
@@ -33,9 +42,13 @@ def get_budget(budget_id: str):
 # Path: /budgets/{id}
 @app.put("/budgets/{id}")
 def put_budget(budget_id: str):
+    """
+    Create a budget
+    :param budget_id:
+    :return:
+    """
     client = MongoClient("mongodb://localhost:27017/")
     db = client["proverbial-path"]
     collection = db["budgets"]
     result = collection.insert_one({"_id": budget_id})
     return {"message": "Budget created", "id": result.inserted_id}
-
