@@ -1,8 +1,8 @@
 # Pycache
 __pycache__/
 
-# Virtual Environment
-venv/
+# Python Virtual Environment
+/backend/venv/
 
 # Database
 database/
