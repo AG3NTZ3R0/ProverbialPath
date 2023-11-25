@@ -1,0 +1,11 @@
+# Pycache
+__pycache__/
+
+# Virtual Environment
+venv/
+
+# Database
+data/
+
+# PyCharm
+.idea/
