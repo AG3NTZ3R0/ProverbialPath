@@ -25,7 +25,7 @@ def get_collection(db_name: str, collection_name: str) -> pymongo.collection.Col
 def get_budgets():
     """
     Get all budgets
-    :return:
+    :return: A list of budgets
     """
     collection = get_collection("proverbial-path", "budgets")
     budgets = collection.find({})
@@ -38,7 +38,7 @@ def get_budget(budget_id: str):
     """
     Get a budget by id
     :param budget_id: The id of the budget
-    :return:
+    :return: The budget
     """
     collection = get_collection("proverbial-path", "budgets")
     budget = collection.find_one({"_id": budget_id})
@@ -51,7 +51,7 @@ def put_budget(budget_id: str):
     """
     Create a budget
     :param budget_id: The id of the budget
-    :return:
+    :return: A message and the id of the budget
     """
     collection = get_collection("proverbial-path", "budgets")
     result = collection.insert_one({"_id": budget_id})
