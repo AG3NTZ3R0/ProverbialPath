@@ -1,3 +1,6 @@
+"""
+Budget Router Tests
+"""
 from fastapi.testclient import TestClient
 from main import app
 import mongomock

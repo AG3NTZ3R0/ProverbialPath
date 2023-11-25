@@ -9,4 +9,8 @@ router = APIRouter()
 # Path: /
 @router.get("/")
 def root():
+    """
+    Heartbeat
+    :return:
+    """
     return {"message": "Hello World"}
